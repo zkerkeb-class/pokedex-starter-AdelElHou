@@ -1,95 +1,75 @@
-# Projet Final - Authentication & Feature
-## 🎯 Objectifs
-Pour ce projet final, nous avons implémenté :
+## Concepts à Comprendre
+1. REST API
+   - Méthodes HTTP (GET, POST, PUT, DELETE)
+   - Codes de statut HTTP
+   - Structure des URL
+   - CORS (Cross-Origin Resource Sharing)
 
-Un système d'authentification complet pour l'application Pokémon
-Des fonctionnalités spécifiques assignées parmi les exigences du projet
+2. Express.js
+   - Routing
+   - Middleware
+   - Gestion des requêtes et réponses
+   - Configuration CORS
 
-## 📋 Réalisation de l'Authentification
-Nous avons développé une solution d'authentification robuste avec :
-### Frontend
+3. Sécurité de Base
+   - Validation des entrées
+   - Authentification
+   - Gestion des erreurs
+   - Politiques CORS
 
-Une page de connexion intuitive avec validation des champs
-Une interface d'inscription sécurisée
-Gestion complète des tokens JWT côté client
-Protection des routes privées avec redirection automatique
+## Configuration CORS
+CORS (Cross-Origin Resource Sharing) est un mécanisme qui permet à de nombreuses ressources (polices, JavaScript, etc.) d'une page web d'être demandées à partir d'un autre domaine que celui du domaine d'origine.
 
-### Backend
+Pour utiliser l'API depuis un autre domaine :
+1. L'API est configurée avec CORS activé
+2. Toutes les origines sont autorisées dans cette version de développement
+3. En production, vous devriez restreindre les origines autorisées
 
-Routes d'authentification (login/register) entièrement fonctionnelles
-Système avancé de génération et validation des JWT
-Middleware de protection pour sécuriser les routes sensibles
-Stockage sécurisé des mots de passe avec hachage bcrypt
+Pour une configuration plus restrictive, vous pouvez modifier les options CORS :
 
-## 🔍 Fonctionnalités spéciales implémentées
-### Stockage d'images en Base64
-Nous avons implémenté une solution permettant aux utilisateurs de télécharger des images de profil ou de Pokémon, qui sont ensuite converties et stockées en Base64 dans la base de données. Cette approche permet un stockage efficace tout en évitant la gestion complexe de fichiers externes.
+```javascript
+app.use(cors({
+  origin: 'https://votre-domaine.com',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
+```
 
-### Sécurisation des mots de passe
-Les mots de passe utilisateurs sont protégés grâce à un hachage robuste utilisant bcrypt avec un facteur de coût approprié, garantissant une sécurité optimale même en cas de fuite de données.
+## Ressources Additionnelles
+- [Documentation Express.js](https://expressjs.com/fr/)
+- [Guide des Status HTTP](https://developer.mozilla.org/fr/docs/Web/HTTP/Status)
+- [REST API Best Practices](https://restfulapi.net/)
 
-### Booster de type aléatoire
-Nous avons développé un système innovant de "boosters" qui attribue des Pokémon aléatoires à l'utilisateur lors de certaines actions dans l'application, enrichissant ainsi l'expérience utilisateur avec un élément de surprise et de collection.
-## 🔒 Bonnes pratiques de sécurité
-Notre projet respecte les meilleures pratiques de sécurité :
+## Support
+Pour toute question ou problème :
+1. Vérifiez la documentation
+2. Consultez les messages d'erreur dans la console
+3. Demandez de l'aide à votre formateur
 
-Variables d'environnement stockées dans un fichier .env non versionné
-Utilisation d'un secret JWT fort et complexe
-Routes sensibles protégées par middleware d'authentification
+## Prochaines Étapes
+- Ajout d'une base de données (MongoDB)
+- Implémentation de tests automatisés
+- Déploiement de l'API
+- Documentation avec Swagger
 
-## ✅ État du projet
-Toutes les tâches requises ont été complétées avec succès :
+## Gestion des Fichiers Statiques
+Le serveur expose le dossier `assets` pour servir les images des Pokémon. Les images sont accessibles via l'URL :
+```
+http://localhost:3000/assets/pokemons/{id}.png
+```
 
-Mise en place d'un front simple
-Mise ne place d'un API et d'une BDD
-Système d'authentification entièrement fonctionnel
-Fonctionnalités spéciales implémentées et testées
-Code bien documenté et structuré
-API robuste et sécurisée
+Par exemple, pour accéder à l'image de Pikachu (ID: 25) :
+```
+http://localhost:3000/assets/pokemons/25.png
+```
 
-## 📹 Démonstration
-Une vidéo démontrant toutes les fonctionnalités et aspects techniques du projet est disponible ici. https://youtu.be/qtiCk-OaHIw
-## 📚 Documentation
-## 🚀 Mise en place du projet
-### Prérequis
+### Configuration
+Le middleware `express.static` est utilisé pour servir les fichiers statiques :
+```javascript
+app.use('/assets', express.static(path.join(__dirname, '../assets')));
+```
 
-Node.js (v14 ou plus récent)
-MongoDB
-npm ou yarn
-
-### Installation
-
-Clonez le dépôt
-
-git clone https://github.com/AdelElHou/pokedex-api.git
-cd pokedex-api
-
-Installez les dépendances
-
-npm install
-# ou
-yarn install
-
-Configurez les variables d'environnement
-
-cp .env.example .env
-# Modifiez le fichier .env avec vos propres valeurs
-
-Lancez le serveur de développement
-
-npm run dev
-# ou
-yarn dev
-
-Pour le frontend (si séparé)
-
-cd client
-npm install
-npm start
-
-
-### Configuration de la base de données
-L'application se connecte à MongoDB. Assurez-vous que votre fichier .env contient les variables suivantes :
-MONGODB_URI=mongodb://localhost:27017/pokedex
-JWT_SECRET=votre_secret_jwt_complexe
-PORT=5000
+### Sécurité
+- Seuls les fichiers du dossier `assets` sont exposés
+- Les autres dossiers du projet restent inaccessibles
+- En production, considérez l'utilisation d'un CDN pour les fichiers statiques
