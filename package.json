@@ -1,28 +1,27 @@
 {
-  "name": "pokedex-ece",
-  "private": true,
-  "version": "0.0.0",
+  "name": "pokemon-api-workshop",
+  "version": "1.0.0",
+  "description": "Atelier API REST pour étudiants en cybersécurité",
   "type": "module",
+  "main": "src/index.js",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "generate-pokemons": "node src/data/generatePokemonsJson.js"
   },
   "dependencies": {
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "@react-three/drei": "^10.0.5",
+    "@react-three/fiber": "^9.1.1",
+    "bcryptjs": "^3.0.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.13.2",
+    "react-router-dom": "^7.4.1",
+    "three": "^0.175.0"
   },
   "devDependencies": {
-    "@eslint/js": "^9.17.0",
-    "@types/react": "^18.3.18",
-    "@types/react-dom": "^18.3.5",
-    "@vitejs/plugin-react": "^4.3.4",
-    "eslint": "^9.17.0",
-    "eslint-plugin-react": "^7.37.2",
-    "eslint-plugin-react-hooks": "^5.0.0",
-    "eslint-plugin-react-refresh": "^0.4.16",
-    "globals": "^15.14.0",
-    "vite": "^6.0.5"
+    "nodemon": "^2.0.22"
   }
 }
